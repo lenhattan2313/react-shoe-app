@@ -2,20 +2,24 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Context } from "./Context";
 import styled from "styled-components";
+import { PropTypes } from "prop-types";
 const Product = (props) => {
-  const {} = React.useContext(Context);
+  const { addToCart, handleDetail, openModal } = React.useContext(Context);
   const { id, title, img, price, inCart } = props.product;
   return (
     <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
       <div className="card">
-        <div className="img-container p-5" onClick={() => console.log("click")}>
+        <div className="img-container p-5" onClick={() => handleDetail(id)}>
           <Link to="/details">
             <img src={img} alt="img" className="card-img-top" />
           </Link>
           <button
             className="cart-btn"
             disabled={inCart}
-            onClick={() => console.log("A")}
+            onClick={() => {
+              addToCart(id);
+              openModal(id);
+            }}
           >
             {inCart ? (
               <p className="text-capitalize mb-0" disabled>
@@ -35,6 +39,15 @@ const Product = (props) => {
       </div>
     </ProductWrapper>
   );
+};
+Product.propTypes = {
+  product: PropTypes.shape({
+    id: PropTypes.number,
+    img: PropTypes.string,
+    title: PropTypes.string,
+    price: PropTypes.number,
+    inCart: PropTypes.bool,
+  }).isRequired,
 };
 const ProductWrapper = styled.div`
   .card {

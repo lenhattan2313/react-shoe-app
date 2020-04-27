@@ -6,26 +6,13 @@ const Context = React.createContext();
 const ContextProvider = (props) => {
   const [products, setProducts] = useState([]);
   const [details, setDetails] = useState({});
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(storeProducts);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalProduct, setModalProduct] = useState(detailProduct);
   const [cartSubTotal, setCartSubTotal] = useState(0);
   const [cartTax, setCartTax] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
 
-  // function tester() {
-  //   setProducts(
-  //     products.map((product) => {
-  //       if (product.id === 1) {
-  //         return {
-  //           ...product,
-  //           inCart: !product.inCart,
-  //         };
-  //       }
-  //       return product;
-  //     })
-  //   );
-  // }
   const getItems = (id) => {
     const product = products.find((product) => product.id === id);
     return product;
@@ -66,6 +53,12 @@ const ContextProvider = (props) => {
   const decrement = (id) => {
     console.log("decre");
   };
+  const removeItem = (id) => {
+    console.log("remove");
+  };
+  const clearCart = () => {
+    console.log("clr");
+  };
   useEffect(() => {
     setProducts(storeProducts);
     setDetails(detailProduct);
@@ -75,12 +68,20 @@ const ContextProvider = (props) => {
       value={{
         products,
         details,
+        cart,
         addToCart,
         handleDetail,
         modalOpen,
         openModal,
         closeModal,
         modalProduct,
+        increment,
+        decrement,
+        removeItem,
+        clearCart,
+        cartSubTotal,
+        cartTax,
+        cartTotal,
       }}
     >
       {props.children}

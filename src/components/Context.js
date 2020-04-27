@@ -6,7 +6,7 @@ const Context = React.createContext();
 const ContextProvider = (props) => {
   const [products, setProducts] = useState([]);
   const [details, setDetails] = useState({});
-  const [cart, setCart] = useState(storeProducts);
+  const [cart, setCart] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalProduct, setModalProduct] = useState(detailProduct);
   const [cartSubTotal, setCartSubTotal] = useState(0);
@@ -34,8 +34,7 @@ const ContextProvider = (props) => {
       return product;
     });
     const inCart = items.find((product) => product.id === id);
-    setProducts(items);
-
+    // setProducts(items);
     setCart((prevState) => [...prevState, inCart]);
   };
 
@@ -48,19 +47,55 @@ const ContextProvider = (props) => {
     setModalOpen(false);
   };
   const increment = (id) => {
-    console.log("incre");
+    setCart((prevState) =>
+      prevState.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            count: item.count + 1,
+            total: item.price * (item.count + 1),
+          };
+        }
+        return item;
+      })
+    );
   };
   const decrement = (id) => {
-    console.log("decre");
+    setCart((prevState) =>
+      prevState.map((item) => {
+        if (item.id === id) {
+          if (item.count === 1) {
+            removeItem(id);
+          }
+          return {
+            ...item,
+            count: item.count - 1,
+            total: item.price * (item.count - 1),
+          };
+        }
+        return item;
+      })
+    );
   };
   const removeItem = (id) => {
-    console.log("remove");
+    setCart((prev) => prev.filter((item) => item.id !== id));
   };
   const clearCart = () => {
-    console.log("clr");
+    setCart([]);
   };
+  const addTotals = () => {
+    let subTotal = 0;
+    cart.map((item) => (subTotal += item.total));
+    const tax = parseFloat((subTotal * 0.1).toFixed(2));
+    const total = tax + subTotal;
+    setCartTotal(total);
+    setCartSubTotal(subTotal);
+    setCartTax(tax);
+  };
+
+  useEffect(() => addTotals(), [cart]);
   useEffect(() => {
-    setProducts(storeProducts);
+    setProducts((prev) => [...storeProducts]);
     setDetails(detailProduct);
   }, []);
   return (

@@ -9,7 +9,7 @@ const Cart = () => {
   const { cart } = React.useContext(Context);
 
   return (
-    <section>
+    <section className="container">
       {cart.length > 0 ? (
         <>
           <Title name="Your" title="Cart" />

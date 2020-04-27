@@ -4,8 +4,12 @@ import { Context } from "./Context";
 import styled from "styled-components";
 import { PropTypes } from "prop-types";
 const Product = (props) => {
-  const { addToCart, handleDetail, openModal } = React.useContext(Context);
-  const { id, title, img, price, inCart } = props.product;
+  const { addToCart, handleDetail, openModal, cart } = React.useContext(
+    Context
+  );
+  const { id, title, img, price } = props.product;
+  const alreadyToCart = cart.some((item) => item.id === id);
+
   return (
     <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
       <div className="card">
@@ -15,13 +19,13 @@ const Product = (props) => {
           </Link>
           <button
             className="cart-btn"
-            disabled={inCart}
+            disabled={alreadyToCart}
             onClick={() => {
               addToCart(id);
               openModal(id);
             }}
           >
-            {inCart ? (
+            {alreadyToCart ? (
               <p className="text-capitalize mb-0" disabled>
                 in Cart
               </p>

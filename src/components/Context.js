@@ -12,7 +12,7 @@ const ContextProvider = (props) => {
   const [cartSubTotal, setCartSubTotal] = useState(0);
   const [cartTax, setCartTax] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
-
+  const [count, setCount] = useState(0);
   const getItems = (id) => {
     const product = products.find((product) => product.id === id);
     return product;
@@ -91,8 +91,28 @@ const ContextProvider = (props) => {
     setCartTotal(total);
     setCartSubTotal(subTotal);
     setCartTax(tax);
+    totalCountCart();
   };
-
+  const toggleFavorite = (id) => {
+    setProducts((prevState) =>
+      products.map((product) => {
+        if (product.id === id) {
+          return {
+            ...product,
+            isFavorite: !product.isFavorite,
+          };
+        }
+        return product;
+      })
+    );
+  };
+  const totalCountCart = () => {
+    setCount(
+      cart.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.count;
+      }, 0)
+    );
+  };
   useEffect(() => addTotals(), [cart]);
   useEffect(() => {
     setProducts((prev) => [...storeProducts]);
@@ -117,6 +137,8 @@ const ContextProvider = (props) => {
         cartSubTotal,
         cartTax,
         cartTotal,
+        toggleFavorite,
+        count,
       }}
     >
       {props.children}

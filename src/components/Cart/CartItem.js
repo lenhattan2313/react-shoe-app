@@ -10,7 +10,7 @@ const CartItem = ({ item }) => {
           src={img}
           alt="img"
           style={{ width: "5rem", height: "5rem" }}
-          className="img-fluid"
+          className="img-fluid border border-dark"
         />
       </div>
       <div className="col-10 mx-auto col-lg-2">

@@ -5,7 +5,7 @@ import EmptyCart from "./EmptyCart";
 import { Context } from "../Context";
 import CartList from "./CartList";
 import CartTotal from "./CartTotal";
-const Cart = () => {
+const Cart = (props) => {
   const { cart } = React.useContext(Context);
 
   return (
@@ -15,7 +15,7 @@ const Cart = () => {
           <Title name="Your" title="Cart" />
           <CartColumns />
           <CartList cart={cart} />
-          <CartTotal />
+          <CartTotal history={props.history} />
         </>
       ) : (
         <EmptyCart />

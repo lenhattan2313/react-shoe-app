@@ -1,32 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { ButtonContainer } from "./Button";
+import { ButtonCart } from "./ButtonCart";
+import { Context } from "./Context";
 const Navbar = () => {
+  const { count } = React.useContext(Context);
+  const showAmout = () => {
+    if (count > 0) {
+      return (
+        <span className="position-absolute border border-dark">{count}</span>
+      );
+    }
+  };
   return (
-    <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm-5">
+    <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm-5 border-bottom border-dark">
+      <Link to="/" className="nav-link">
+        <img src="img/shoe.svg" alt="img" className="navbar-brand" />
+      </Link>
       <ul className="navbar-nav align-items-center">
         <li className="nav-item">
-          <Link to="/" className="nav-link">
+          <Link to="/" className="nav-link text-title ">
             products
           </Link>
         </li>
       </ul>
       <Link to="/cart" className="ml-auto">
-        <ButtonContainer>
-          <span className="mr-2">
-            <i className="fa fa-cart-plus" />
-          </span>
-          my cart
-        </ButtonContainer>
+        <ButtonCart>
+          <i className="ri-shopping-bag-line"></i>
+          {showAmout()}
+        </ButtonCart>
       </Link>
     </NavWrapper>
   );
 };
 const NavWrapper = styled.nav`
-  background: var(--mainBlue);
+  background: white;
   .nav-link {
-    color: var(--mainWhite) !important;
+    color: black !important;
     font-size: 1.3rem;
     text-transform: capitalize;
   }

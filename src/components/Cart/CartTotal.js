@@ -1,7 +1,9 @@
 import React from "react";
 import { Context } from "../Context";
 import { Link } from "react-router-dom";
-const CartTotal = () => {
+import PaypalButton from "./PaypalButton";
+
+const CartTotal = (props) => {
   const { cartSubTotal, cartTax, cartTotal, clearCart } = React.useContext(
     Context
   );
@@ -30,6 +32,11 @@ const CartTotal = () => {
             <span className="text-title">total: </span>
             <strong>$ {cartTotal}</strong>
           </h5>
+          <PaypalButton
+            total={cartTotal}
+            clearCart={clearCart}
+            history={props.history}
+          />
         </div>
       </div>
     </div>

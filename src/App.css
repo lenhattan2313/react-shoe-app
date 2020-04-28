@@ -1,23 +1,42 @@
+@font-face {
+  font-family: fontTitle;
+  src: url("./font/adineuePRO-Bold.woff2");
+}
+@font-face {
+  font-family: fontText;
+  src: url("./font/AdihausDIN-Regular.woff2");
+}
 :root {
-  --mainBlue: #2a2a72;
-  --lightBlue: #009ffd;
+  --mainBlue: #324e7b;
+  --lightBlue: #5068a9;
   --mainWhite: #f3f3f3;
   --mainDark: #232528;
-  --mainYellow: #ffa400;
+  --mainYellow: #1a936f;
+  --font-title: fontTitle;
+  --font-text: fontText;
 }
 body {
   background: var(--mainWhite) !important ;
   color: var(--mainDark) !important;
+  font-family: var(--font-text) !important;
 }
 .text-title {
-  letter-spacing: 0.3rem;
-  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-transform: uppercase !important;
+  font-size: 1.5rem !important;
+  font-family: var(--font-title);
 }
 .text-blue {
   color: var(--mainBlue);
 }
 .text-bright {
   color: var(--lightBlue);
+}
+.text-footer {
+  color: #767677;
+  line-height: 1;
+  text-transform: lowercase;
+  font-size: 0.8rem;
 }
 .btn-black {
   background: transparent;
